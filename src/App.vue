@@ -1,15 +1,16 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <task-dashboard id="test">
+  </task-dashboard>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TaskDashboard from './components/Dashboard/TaskDashboard.vue'
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    TaskDashboard
   }
 }
 </script>
@@ -22,5 +23,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+#id {
+  padding: 1000px;
 }
 </style>
