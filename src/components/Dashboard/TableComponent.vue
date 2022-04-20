@@ -40,12 +40,13 @@
 </template>
 
 <script>
-import { sortBy } from "lodash";
+import { sortBy, } from "lodash";
 import { ref, computed } from "vue";
 import {useRouter} from 'vue-router'
 
 export default {
   setup() {
+    //TODO Create a store and move this variables with data to there
     const headers = [
       {
         nameToDisplay: "Task",
@@ -57,11 +58,11 @@ export default {
       },
       {
         nameToDisplay: "Date",
-        jsonId: "date",
+        jsonId: "dateToDisplay",
       },
       {
         nameToDisplay: "Last Modified Date",
-        jsonId: "lastModifiedDate",
+        jsonId: "lastModifiedDateToDisplay",
       },
       {
         nameToDisplay: "Status",
@@ -69,45 +70,55 @@ export default {
       },
     ];
 
-    const data = [
+const data = [
       {
         id: 1,
-        task: "8057",
+        task:"8057",
         priority: 1,
-        date: "03/04/2021",
-        lastModifiedDate: "02/04/2022",
+        dateToDisplay: "2022-4-20",
+        dateTimeStamp: new Date("2022-4-20").getTime(),
+        lastModifiedDateToDisplay: "2022-1-1",
+        lastModifiedDateTimeStamp:new Date("2022-1-1").getTime() ,
         status: "Active",
       },
       {
         id: 2,
         task: "8001",
         priority: 4,
-        date: "10/04/2022",
-        lastModifiedDate: "02/04/2022",
+        dateToDisplay: "2022-5-2",
+        dateTimeStamp:new Date().getTime(),
+        lastModifiedDateToDisplay: "2022-11-22",
+        lastModifiedDateTimeStamp: new Date().getTime(),
         status: "Active",
       },
       {
         id: 3,
         task: "8054",
         priority: 2,
-        date: "02/04/2022",
-        lastModifiedDate: "02/04/2022",
+        dateToDisplay: "2021-3-20",
+        dateTimeStamp:new Date("2021-3-20").getTime(),
+        lastModifiedDateToDisplay: "2022-8-12",
+        lastModifiedDateTimeStamp: new Date("2022-8-12").getTime(),
         status: "Active",
       },
       {
-        id: 4,
+        id: 6,
         task: "3598",
         priority: 1,
-        date: "02/04/2022",
-        lastModifiedDate: "02/04/2022",
+        dateToDisplay: "2019-4-24",
+        dateTimeStamp:new Date("2019-4-24").getTime(),
+        lastModifiedDateToDisplay: "2022-3-2",
+        lastModifiedDateTimeStamp: new Date("2022-3-2").getTime(),
         status: "Pending",
       },
       {
         id: 5,
         task: "4569",
         priority: 1,
-        date: "02/04/2022",
-        lastModifiedDate: "02/04/2022",
+        dateToDisplay: "2022-5-18",
+        dateTimeStamp:new Date("2022-5-18").getTime(),
+        lastModifiedDateToDisplay: "2020-4-20",
+        lastModifiedDateTimeStamp: new Date("2020-4-20").getTime(),
         status: "Finished",
       },
     ];
@@ -118,10 +129,22 @@ export default {
     let updatedList = ref([]);
     let searchQuery = ref("");
 
+    //TODO Sort by default ascending, if clicked then descending
     //function to sort the table
     const sortTable = (column) => {
       sort.value = true;
-      updatedList.value = sortBy(data, column);
+
+      //check to see if the column to sort is one of the two that involve dates, if so, sort them by timestamp instead of a readable date
+      if(column == 'dateToDisplay'){
+        updatedList.value = sortBy(data, 'dateTimeStamp');
+      }
+      else if(column == 'lastModifiedDateToDisplay'){
+        updatedList.value = sortBy(data, 'lastModifiedDateTimeStamp');
+      }
+
+      else  {
+        updatedList.value = sortBy(data, column);
+      } 
     };
 
     //checks if a column has been sorted
