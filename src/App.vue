@@ -6,6 +6,9 @@
 </template>
 
 <script>
+//importing bootstrap 5
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import TaskDashboard from './components/Dashboard/TaskDashboard.vue'
 
 export default {

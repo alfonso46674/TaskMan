@@ -1,8 +1,11 @@
 <template>
   <table id="tableComponent" class="table table-bordered table-striped table-hover table-responsive">
       <thead>
-          <th v-for="header in headers" :key="header.nameToDisplay">
-            {{header.nameToDisplay}}
+          <th v-for="header in headers" :key="header.nameToDisplay" @click="sortTable(header.jsonId)">
+            <div>
+                {{header.nameToDisplay}} 
+                <font-awesome-icon  icon="sort" />
+            </div>
           </th>
       </thead>
       <tbody>
@@ -74,17 +77,27 @@ export default {
                 lastModifiedDate: "02/04/2022"
             },
         ]
+
+        const sortTable = (header) => {
+            console.log(header)
+        }
         return {
             headers,
-            data
+            data,
+            sortTable
         }
     }
 }
 </script>
 
 <style>
- #tableComponent {
-     /* margin: 0; */
-     padding-right: 500px;
- }
+table th:hover {
+        background:#f2f2f2;
+      }
+
+table th {
+    text-align: center;
+    vertical-align: middle;
+}
+
 </style>
