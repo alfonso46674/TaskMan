@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { sortBy, } from "lodash";
+import { sortBy,reverse } from "lodash";
 import { ref, computed } from "vue";
 import {useRouter} from 'vue-router'
 
@@ -86,9 +86,9 @@ const data = [
         task: "8001",
         priority: 4,
         dateToDisplay: "2022-5-2",
-        dateTimeStamp:new Date().getTime(),
+        dateTimeStamp:new Date("2022-5-2").getTime(),
         lastModifiedDateToDisplay: "2022-11-22",
-        lastModifiedDateTimeStamp: new Date().getTime(),
+        lastModifiedDateTimeStamp: new Date("2022-11-22").getTime(),
         status: "Active",
       },
       {
@@ -150,7 +150,7 @@ const data = [
     //checks if a column has been sorted
     const sortedList = computed(() => {
       if (sort.value) {
-        return updatedList.value;
+        return reverse(updatedList.value);
       } else {
         return data;
       }
