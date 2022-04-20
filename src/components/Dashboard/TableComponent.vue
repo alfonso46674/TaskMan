@@ -1,5 +1,5 @@
 <template>
-  <!-- TODO separate the seach bar into another component -->
+  <!-- TODO separate the seach bar into another component, and put it in the taskDashboard -->
   <div class="rootDiv">
     <div class="searchBar">
       <div class="input-group mb-5">
@@ -29,7 +29,7 @@
         </th>
       </thead>
       <tbody>
-        <tr v-for="item in filteredList" :key="item">
+        <tr v-for="item in filteredList" :key="item" @click="goToTaskInformation(item.id)">
           <td v-for="header in headers" :key="header.nameToDisplay">
             {{ item[header.jsonId] }}
           </td>
@@ -42,6 +42,7 @@
 <script>
 import { sortBy } from "lodash";
 import { ref, computed } from "vue";
+import {useRouter} from 'vue-router'
 
 export default {
   setup() {
@@ -111,6 +112,8 @@ export default {
       },
     ];
 
+    let router = useRouter()
+
     let sort = ref(false);
     let updatedList = ref([]);
     let searchQuery = ref("");
@@ -139,6 +142,12 @@ export default {
       });
     });
 
+    //move to the task route to display its information
+    const goToTaskInformation = (taskId) => {
+      console.log(taskId)
+      router.push(`/task/${taskId}`)
+    }
+
     return {
       headers,
       data,
@@ -146,6 +155,7 @@ export default {
       sortedList,
       sortTable,
       filteredList,
+      goToTaskInformation
     };
   },
 };

@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <task-dashboard id="test">
-  </task-dashboard>
+  <div id="root">
+    <router-view/>
   </div>
 </template>
 
@@ -9,13 +8,7 @@
 //importing bootstrap 5
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import TaskDashboard from './components/Dashboard/TaskDashboard.vue'
-
-export default {
-  components: {
-    TaskDashboard
-  }
-}
+export default {}
 </script>
 
 <style>
@@ -28,7 +21,7 @@ export default {
   margin-top: 60px;
 }
 
-#id {
-  padding: 1000px;
+#root {
+  padding: 1px;
 }
 </style>
