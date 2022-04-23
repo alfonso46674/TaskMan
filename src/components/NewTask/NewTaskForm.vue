@@ -14,6 +14,10 @@
         :selectedItem="priority"
       />
 
+      
+      <steps-to-take-component
+        :numberOfSteps="numberOfStep"
+      />
       <!-- </form> -->
     </div>
     <router-link to="/"> Back </router-link>
@@ -23,12 +27,14 @@
 <script>
 import {computed } from "vue";
 import DropDownComponent from "./FormComponents/DropDown/DropDownComponent.vue";
-// import {store} from '../../store/newtask.store'
+
 import {useStore} from 'vuex'
+import StepsToTakeComponent from './FormComponents/StepsToTake/StepsToTakeComponent.vue';
 
 export default {
   components: {
     DropDownComponent,
+    StepsToTakeComponent
   },
   setup() {
     const store = useStore()
@@ -46,9 +52,15 @@ export default {
       return store.getters['newTask/currentPriority']
     })
 
+    const numberOfStep = computed(()=>{
+      console.log(store.getters['newTask/currentNumberOfSteps'])
+      return store.getters['newTask/currentNumberOfSteps']
+    })
+
     return {
       priorityItems,
-      priority
+      priority,
+      numberOfStep
     };
   },
 };
