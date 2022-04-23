@@ -11,13 +11,15 @@
       {{selectedItem}}
     </button>
     <ul class="dropdown-menu">
-      <li v-for="item in dropdownItems" :key="item" class="dropdown-item" :value="item" @click="sendSelectedItem(item)" >{{item}}</li>  
+      <li v-for="item in dropdownItems" :key="item" class="dropdown-item" :value="item" @click="updateSelectedItem(item)" >{{item}}</li>  
     </ul>
   </div>
 </template>
 
 <script>
-import {store} from '../../newtask.store'
+// import {store} from '../../../../store/newtask.store'
+import {useStore} from 'vuex'
+// import {computed} from 'vue'
 
 export default {
     props:{
@@ -35,12 +37,14 @@ export default {
         }
     }, 
     setup(){
+        const store = useStore()
 
-        const sendSelectedItem =(item) =>{
-            store.setPriority(item)
+        const updateSelectedItem =(item) =>{
+            store.commit('newTask/setPriority',item)
         }
     return {
-        sendSelectedItem,
+      updateSelectedItem,
+      // selectedItem: computed(()=> store.state.priority),
     }
     }
 };
