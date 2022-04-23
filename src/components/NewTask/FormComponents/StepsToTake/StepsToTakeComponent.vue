@@ -43,8 +43,11 @@ export default {
 <style scoped>
 
 #icons {
+    display: flex;
     padding-right: 1%;
-    text-align: right;
+    justify-content: right;
+    gap: 3px;
 }
+
 
 </style>
