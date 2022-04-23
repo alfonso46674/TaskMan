@@ -1,7 +1,7 @@
 import {createWebHistory, createRouter} from 'vue-router'
 import TaskDashboard from '../components/Dashboard/TaskDashboard'
-import NewTaskForm from '../components/Tasks/NewTaskForm'
-import TaskComponent from '../components/Tasks/TaskComponent'
+import NewTaskForm from '../components/NewTask/NewTaskForm'
+import TaskComponent from '../components/Task/TaskComponent'
 
 
 const router = createRouter({

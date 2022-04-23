@@ -5,8 +5,6 @@
 </template>
 
 <script>
-//importing bootstrap 5
-import "bootstrap/dist/css/bootstrap.min.css";
 
 export default {}
 </script>
