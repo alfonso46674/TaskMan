@@ -3,8 +3,12 @@
             <span class="input-group-text">Step  {{step}}</span>
             <textarea class="form-control" aria-label="With textarea"></textarea>
   </div>
-  <button @click="addStep">Add new step</button>
-  <button @click="removeStep" v-if="numberOfSteps > 1">Remove last step</button>
+
+  <div id="icons">
+    <font-awesome-icon icon="minus" class="fa-xl" @click="removeStep"  v-if="numberOfSteps > 1"/>
+    <font-awesome-icon icon="plus" class="fa-xl" @click="addStep"/>
+  </div>
+     
 </template>
 
 <script>
@@ -36,6 +40,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+#icons {
+    padding-right: 1%;
+    text-align: right;
+}
 
 </style>

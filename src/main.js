@@ -2,9 +2,14 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faSort } from "@fortawesome/free-solid-svg-icons";
 import {router} from './routes/router'
 import {store} from './store/store'
+
+//import icons
+import { faSort } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faMinus } from "@fortawesome/free-solid-svg-icons";
+
 
 //import bootstrap
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -12,6 +17,8 @@ import "bootstrap"
 
 //add to the icon library the sort icon
 library.add(faSort);
+library.add(faPlus);
+library.add(faMinus);
 
 const app = createApp(App)
 app.use(router)

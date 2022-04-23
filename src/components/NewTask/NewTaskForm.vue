@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="rootDiv">
-      <!-- <form> -->
+      <form @submit.prevent="submitData">
       <div>
         <label>Task title</label>
         <input />
@@ -18,7 +18,7 @@
       <steps-to-take-component
         :numberOfSteps="numberOfStep"
       />
-      <!-- </form> -->
+      </form>
     </div>
     <router-link to="/"> Back </router-link>
   </div>
