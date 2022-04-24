@@ -1,7 +1,7 @@
 <template>
   <div class="input-group" v-for="step in stepCount" :key="step">
             <span class="input-group-text">Step  {{step}}</span>
-            <textarea class="form-control" aria-label="With textarea" :id="step" ></textarea>
+            <textarea class="form-control" aria-label="With textarea" :id="step" @input="editStepObject" ></textarea>
             <!-- <textarea class="form-control" aria-label="With textarea" @input="stepsArray[step-1]"></textarea> -->
   </div>
 
@@ -32,14 +32,20 @@ export default {
         }
 
         const addEmptyStepObject = () => {
-            store.commit('newTask/addStepObject',{id: store.getters['newTask/currentNumberOfSteps'] , value: "" })
+            store.commit('newTask/addStepObject',{id: store.getters['newTask/currentNumberOfSteps'] + 1 , value: "" })
+        }
+
+        const editStepObject = event => {
+            console.log(event.target.id)
+            store.commit('newTask/editStepObject',{id: event.target.id, value: event.target.value})
         }
 
 
         return {
+            stepCount,
             removeStepObject,
             addEmptyStepObject,
-            stepCount
+            editStepObject
         }
     }
 }
