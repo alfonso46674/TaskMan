@@ -4,19 +4,19 @@ export const newTask = {
     state(){
         return {
             priority: null,
-            numberOfSteps: 1,
+            steps: [{id:1,value:""}]
         }
     },
     mutations:{
         setPriority(state,priority){
             state.priority = priority
         },
-        addStep(state){
-            state.numberOfSteps += 1
+        addStepObject(state,{id,value}){
+            state.steps.push({id,value})
         },
-        removeStep(state){
-            if(state.numberOfSteps >= 2){
-                state.numberOfSteps -= 1
+        removeStepObject(state){
+            if(state.steps.length >= 2){
+                state.steps.pop()
             }
         }
 
@@ -29,7 +29,7 @@ export const newTask = {
             return state.priority
         },
         currentNumberOfSteps(state){
-            return state.numberOfSteps
-        }
+            return state.steps.length
+        },
     }
 }

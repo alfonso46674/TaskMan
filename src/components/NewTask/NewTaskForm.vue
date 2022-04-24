@@ -15,9 +15,8 @@
       />
 
       
-      <steps-to-take-component
-        :numberOfSteps="numberOfStep"
-      />
+      <steps-to-take-component/>
+      
       </form>
     </div>
     <router-link to="/"> Back </router-link>
@@ -52,15 +51,10 @@ export default {
       return store.getters['newTask/currentPriority']
     })
 
-    const numberOfStep = computed(()=>{
-      console.log(store.getters['newTask/currentNumberOfSteps'])
-      return store.getters['newTask/currentNumberOfSteps']
-    })
 
     return {
       priorityItems,
       priority,
-      numberOfStep
     };
   },
 };
