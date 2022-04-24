@@ -10,16 +10,14 @@
     >
       {{selectedItem}}
     </button>
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu" re>
       <li v-for="item in dropdownItems" :key="item" class="dropdown-item" :value="item" @click="updateSelectedItem(item)" >{{item}}</li>  
     </ul>
   </div>
 </template>
 
 <script>
-// import {store} from '../../../../store/newtask.store'
 import {useStore} from 'vuex'
-// import {computed} from 'vue'
 
 export default {
     props:{
@@ -44,7 +42,6 @@ export default {
         }
     return {
       updateSelectedItem,
-      // selectedItem: computed(()=> store.state.priority),
     }
     }
 };

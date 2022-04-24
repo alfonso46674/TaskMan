@@ -4,7 +4,7 @@
       <form @submit.prevent="submitData">
       <div>
         <label>Task title</label>
-        <input @input="editTitle"/>
+        <input @input="editTitle" required/>
       </div>
       
       <!-- Used for the task priority -->
@@ -12,6 +12,7 @@
         :dropdownName="'Priority'"
         :dropdownItems="priorityItems"
         :selectedItem="priority"
+        aria-required="true"
       />
 
       
@@ -50,7 +51,7 @@ export default {
     //recompute the priority when the user changes it in the dropdown component
     const priority = computed(()=>{
       if(store.getters['newTask/currentPriority'] == null){
-        return priorityItems[0]
+        return ' '
       }
       return store.getters['newTask/currentPriority']
     })

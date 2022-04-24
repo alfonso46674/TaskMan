@@ -1,8 +1,7 @@
 <template>
   <div class="input-group" v-for="step in stepCount" :key="step">
             <span class="input-group-text">Step  {{step}}</span>
-            <textarea class="form-control" aria-label="With textarea" :id="step" @input="editStepObject" ></textarea>
-            <!-- <textarea class="form-control" aria-label="With textarea" @input="stepsArray[step-1]"></textarea> -->
+            <textarea class="form-control" aria-label="With textarea" :id="step" @input="editStepObject" required></textarea>
   </div>
 
   <div id="icons">
