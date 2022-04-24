@@ -16,7 +16,8 @@
 
       
       <steps-to-take-component/>
-      
+
+      <button>Submit</button>
       </form>
     </div>
     <router-link to="/"> Back </router-link>
@@ -42,7 +43,6 @@ export default {
     const priorityItems = [1,2,3,4]
 
 
-
     //recompute the priority when the user changes it in the dropdown component
     const priority = computed(()=>{
       if(store.getters['newTask/currentPriority'] == null){
@@ -51,10 +51,14 @@ export default {
       return store.getters['newTask/currentPriority']
     })
 
+    const submitData = () => {
+      store.dispatch('newTask/postNewTask')
+    }
 
     return {
       priorityItems,
       priority,
+      submitData
     };
   },
 };

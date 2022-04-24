@@ -1,10 +1,13 @@
+import axios from "axios"
+
 export const newTask = {
     namespaced: true,
 
     state(){
         return {
             priority: null,
-            steps: [{id:1,value:""}]
+            steps: [{id:1,value:""}],
+            postStatus: {status: 200, statusText: "",error:false }
         }
     },
     mutations:{
@@ -25,13 +28,30 @@ export const newTask = {
 
             if(foundIndex != -1){
                 state.steps[foundIndex].value = value
-            }
-               
+            }    
+        },
+        handleError(state,{status,statusText}){
+            state.postStatus.status = status
+            state.postStatus.statusText = statusText
+            
+            if(status >= 400 && status < 600) state.postStatus.error = true
+            else state.postStatus.error = false  
         }
 
     },
     actions:{
-
+        postNewTask({commit,state}){
+            axios.post('https://alfonso4674.free.beeceptor.com',
+            {
+                priority: state.priority,
+                steps: state.steps
+            }).then((response)=>{
+                console.log(response)
+                commit('handleError',{status:response.status, statusText: response.statusText})
+            }).catch(error => {
+                console.log({'POST error while uploading new task': error})
+            })
+        }
     },
     getters:{
         currentPriority(state){
