@@ -5,12 +5,16 @@ export const newTask = {
 
     state(){
         return {
+            title: null,
             priority: null,
             steps: [{id:1,value:""}],
             postStatus: {status: 200, statusText: "",error:false }
         }
     },
     mutations:{
+        setTitle(state,value){
+            state.title = value
+        },
         setPriority(state,priority){
             state.priority = priority
         },
@@ -43,6 +47,7 @@ export const newTask = {
         postNewTask({commit,state}){
             axios.post('https://alfonso4674.free.beeceptor.com',
             {
+                title: state.title,
                 priority: state.priority,
                 steps: state.steps
             }).then((response)=>{

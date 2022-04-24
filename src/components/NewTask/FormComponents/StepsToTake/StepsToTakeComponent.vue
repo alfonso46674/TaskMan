@@ -36,7 +36,6 @@ export default {
         }
 
         const editStepObject = event => {
-            console.log(event.target.id)
             store.commit('newTask/editStepObject',{id: event.target.id, value: event.target.value})
         }
 
