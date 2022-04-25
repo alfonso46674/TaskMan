@@ -45,7 +45,7 @@ export const newTask = {
     },
     actions:{
         postNewTask({commit,state}){
-            axios.post('https://alfonso4674.free.beeceptor.com',
+            axios.post('http://localhost:4674/api/task/new',
             {
                 title: state.title,
                 priority: state.priority,
@@ -53,7 +53,7 @@ export const newTask = {
             }).then((response)=>{
                 console.log(response)
                 commit('handleError',{status:response.status, statusText: response.statusText})
-            }).catch(error => {
+            }).catch((error) => {
                 console.log({'POST error while uploading new task': error})
             })
         }

@@ -1,0 +1,23 @@
+@host = http://localhost:4674/api
+
+###
+GET {{host}}
+
+###
+POST {{host}}/task/new
+Content-Type: application/json
+
+{
+    "title": "1",
+    "priority": 1,
+    "steps": [
+        {
+            "id": 1,
+            "value": "11"
+        }
+    ]
+}
+
+
+###
+DELETE {{host}}
