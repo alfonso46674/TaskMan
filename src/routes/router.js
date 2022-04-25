@@ -1,11 +1,11 @@
-import {createWebHistory, createRouter} from 'vue-router'
+import {createWebHashHistory, createWebHistory,createRouter} from 'vue-router'
 import TaskDashboard from '../components/Dashboard/TaskDashboard'
 import NewTaskForm from '../components/NewTask/NewTaskForm'
 import TaskComponent from '../components/Task/TaskComponent'
 
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: process.env.IS_ELECTRON ? createWebHashHistory() : createWebHistory(),
     routes: [
         {
             path: '/',
