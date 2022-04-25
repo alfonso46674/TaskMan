@@ -1,9 +1,10 @@
-'use strict'
+// 'use strict'
 
 import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
+const server = require('../server/server');
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -11,6 +12,12 @@ protocol.registerSchemesAsPrivileged([
 ])
 
 async function createWindow() {
+  
+    // start the backend server
+    const PORT = 4674
+    const HOST = '0.0.0.0'
+    server.listen(PORT,HOST,()=>{console.log(`Server on port: ${PORT} and host ${HOST}`)});
+  
   // Create the browser window.
   const win = new BrowserWindow({
     width: 800,
@@ -19,10 +26,13 @@ async function createWindow() {
       
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+      // nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+      // nodeIntegration: true,
       contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION
     }
   })
+    console.log(process.env.ELECTRON_NODE_INTEGRATION)
+
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
