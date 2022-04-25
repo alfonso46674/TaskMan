@@ -51,7 +51,6 @@ export const newTask = {
                 priority: state.priority,
                 steps: state.steps
             }).then((response)=>{
-                console.log(response)
                 commit('handleError',{status:response.status, statusText: response.statusText})
             }).catch((error) => {
                 console.log({'POST error while uploading new task': error})
