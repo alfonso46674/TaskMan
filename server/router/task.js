@@ -1,13 +1,13 @@
 const router = require('express').Router()
-const db = require('../helpers/jsonDatabase')
+const db = require('../db/task_db')
 
 //returns all tasks in the db
 router.get('/all',(req,res)=>{
     try{    
-        //read db.json
-        let dbJSON = db.read()
+        //read database for tasks
+        let data = db.getAllTasks()
 
-        res.status(200).send(dbJSON)
+        res.status(200).send(data)
     }catch(error){
         res.status(400).send({'Error while obtaining the data':error})        
     }
@@ -18,15 +18,17 @@ router.get('/all',(req,res)=>{
 //create a new task 
 router.post('/new',(req,res)=>{
     try{
+        //TODO Create function to validate if those parameters are valid, use package joi from npm
         let {title, priority, steps} = req.body
         if(title !== undefined && priority !== undefined && steps !== undefined){
-            //read the db.json
-            let dbJSON = db.read()
             
+            db.createTaskTable()
+
             let date = new Date()
             //create the new data to store in the db.json
             let data = {
-                uid: dbJSON.length == 0 ? 1 :  Math.max.apply(Math,dbJSON.map(function(o){return o.uid;})) + 1,
+                uid: 1,
+                // uid: dbJSON.length == 0 ? 1 :  Math.max.apply(Math,dbJSON.map(function(o){return o.uid;})) + 1,
                 title: title,
                 priority: priority,
                 steps: steps,
@@ -38,11 +40,13 @@ router.post('/new',(req,res)=>{
             }
             
             //append the data object to the db
-            dbJSON.push(data)
-            //save the new version of the db by overwritting the old db.json
-            db.write(dbJSON)
+            if(db.addTaskToDB(data)){
+                res.status(201).send({'Success':'New task created'})
+            } else {
+                res.status(500).send('Error while uploading the new task')
+            }
+            
 
-            res.status(201).send({'Success':'New task created'})
         } else {
             res.status(400).send({'Missing parameters':'There are missing parameters to create a new task'})
         }
