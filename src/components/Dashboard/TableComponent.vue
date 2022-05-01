@@ -160,9 +160,9 @@ export default {
       } 
     };
 
+    //TODO Move sortedList and filteredList functionality to dashboard.store, maybe as getters?
     //checks if a column has been sorted
     const sortedList = computed(() => {
-      console.log("1")
       if (sort.value) {
         return reverse(updatedList.value);
       } else {
@@ -172,7 +172,6 @@ export default {
 
     //filter search
     const filteredList = computed(() => {
-      console.log("2")
       if(sortedList.value == null){
         return data.value
       }

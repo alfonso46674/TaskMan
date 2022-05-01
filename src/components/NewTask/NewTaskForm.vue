@@ -31,6 +31,7 @@ import DropDownComponent from "./FormComponents/DropDown/DropDownComponent.vue";
 
 import {useStore} from 'vuex'
 import StepsToTakeComponent from './FormComponents/StepsToTake/StepsToTakeComponent.vue';
+import {useRouter} from 'vue-router'
 
 export default {
   components: {
@@ -39,6 +40,7 @@ export default {
   },
   setup() {
     const store = useStore()
+    const router = useRouter()
 
     //priority list
     const priorityItems = [1,2,3,4]
@@ -58,6 +60,7 @@ export default {
 
     const submitData = () => {
       store.dispatch('newTask/postNewTask')
+      router.back()
     }
 
     return {
