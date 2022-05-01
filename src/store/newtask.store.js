@@ -6,7 +6,7 @@ export const newTask = {
     state(){
         return {
             title: null,
-            priority: null,
+            priority: 4,
             steps: [{id:1,value:""}],
             postStatus: {status: 200, statusText: "",error:false }
         }
