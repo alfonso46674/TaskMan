@@ -14,6 +14,14 @@ router.get('/all',(req,res)=>{
 })
 
 //return a specific task by its uid
+router.get('',(req,res)=>{
+    try{
+        let data = db.getTask(parseInt(req.query.uid))
+        res.status(200).send(data)
+    }catch(error){
+        res.status(400).send({'Error while obtaining the task data':error})
+    }
+})
 
 //create a new task 
 router.post('/new',(req,res)=>{

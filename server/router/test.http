@@ -1,7 +1,7 @@
 @host = http://localhost:4674/api
 
 ###
-GET {{host}}
+GET {{host}}/task?uid=1
 
 ###
 POST {{host}}/task/new
