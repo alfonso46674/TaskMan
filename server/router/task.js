@@ -30,13 +30,16 @@ router.post('/new',(req,res)=>{
         let {title, priority, steps} = req.body
         if(title !== undefined && priority !== undefined && steps !== undefined){
             
+            //create the taskTable
             db.createTaskTable()
 
+            //obtain the current date
             let date = new Date()
-            //create the new data to store in the db.json
+
+
+            //create the new data to store in the sqlite db
             let data = {
-                uid: 1,
-                // uid: dbJSON.length == 0 ? 1 :  Math.max.apply(Math,dbJSON.map(function(o){return o.uid;})) + 1,
+                uid: db.getMaxUid() == -1 ? 1 : db.getMaxUid() + 1 ,
                 title: title,
                 priority: priority,
                 steps: steps,

@@ -6,16 +6,24 @@ let lib = {}
 
 //create the Task Table
 lib.createTaskTable = function(){
+    //TODO Add a unique auto-incremental identifier to handle rows. At the moment,
+    //uid is not unique, since its an id that includes the task and its steps, so the steps share the task's id
     db.run(`CREATE TABLE IF NOT EXISTS Tasks (
-        uid, title, priority, stepNumber, stepValue, status,
-        dateToDisplay, dateTimeStamp, lastModifiedDateToDisplay,
+        uid INTEGER NOT NULL, 
+        title TEXT NOT NULL, 
+        priority INTEGER NOT NULL,
+        stepNumber INTEGER NOT NULL,
+        stepValue TEXT NOT NULL,
+        status TEXT NOT NULL,
+        dateToDisplay,
+        dateTimeStamp,
+        lastModifiedDateToDisplay,
         lastModifiedDateTimeStamp)`,{})
 }
 
 //add a task to the database
 lib.addTaskToDB = async function(task){
     try{
-        //TODO no recibir el uid, sino crearlo aqui. Hacer una peticion para encontrar el id maximo
         //TODO Create function to validate if those parameters are valid, use package joi from npm
         let {uid, title, priority, steps, status, dateToDisplay, 
             dateTimeStamp, lastModifiedDateToDisplay,
@@ -86,6 +94,16 @@ lib.getAllTasks = function(){
         })
     
    return uniqueTasks
+}
+
+//return the max uid in the database
+lib.getMaxUid = function(){
+    let data =  db.queryOne('SELECT MAX(uid) as maxUid from Tasks',{})
+    if(data.maxUid){
+        return data.maxUid
+    } else {
+        return -1
+    }
 }
 
 module.exports = lib
