@@ -71,58 +71,6 @@ export default {
       },
     ];
 
-// const data2 = [
-//       {
-//         id: 1,
-//         task:"8057",
-//         priority: 1,
-//         dateToDisplay: "2022-4-20",
-//         dateTimeStamp: new Date("2022-4-20").getTime(),
-//         lastModifiedDateToDisplay: "2022-1-1",
-//         lastModifiedDateTimeStamp:new Date("2022-1-1").getTime() ,
-//         status: "Active",
-//       },
-//       {
-//         id: 2,
-//         task: "8001",
-//         priority: 4,
-//         dateToDisplay: "2022-5-2",
-//         dateTimeStamp:new Date("2022-5-2").getTime(),
-//         lastModifiedDateToDisplay: "2022-11-22",
-//         lastModifiedDateTimeStamp: new Date("2022-11-22").getTime(),
-//         status: "Active",
-//       },
-//       {
-//         id: 3,
-//         task: "8054",
-//         priority: 2,
-//         dateToDisplay: "2021-3-20",
-//         dateTimeStamp:new Date("2021-3-20").getTime(),
-//         lastModifiedDateToDisplay: "2022-8-12",
-//         lastModifiedDateTimeStamp: new Date("2022-8-12").getTime(),
-//         status: "Active",
-//       },
-//       {
-//         id: 6,
-//         task: "3598",
-//         priority: 1,
-//         dateToDisplay: "2019-4-24",
-//         dateTimeStamp:new Date("2019-4-24").getTime(),
-//         lastModifiedDateToDisplay: "2022-3-2",
-//         lastModifiedDateTimeStamp: new Date("2022-3-2").getTime(),
-//         status: "Pending",
-//       },
-//       {
-//         id: 5,
-//         task: "4569",
-//         priority: 1,
-//         dateToDisplay: "2022-5-18",
-//         dateTimeStamp:new Date("2022-5-18").getTime(),
-//         lastModifiedDateToDisplay: "2020-4-20",
-//         lastModifiedDateTimeStamp: new Date("2020-4-20").getTime(),
-//         status: "Finished",
-//       },
-//     ];
 
     const store = useStore()
     let router = useRouter()
@@ -184,8 +132,8 @@ export default {
 
     //move to the task route to display its information
     const goToTaskInformation = (taskId) => {
-      console.log(sortedList)
-      console.log(taskId)
+      // console.log(sortedList)
+      // console.log(taskId)
       router.push(`/task/${taskId}`)
     }
 

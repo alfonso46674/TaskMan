@@ -14,6 +14,7 @@ router.get('/all',(req,res)=>{
 })
 
 //return a specific task by its uid
+//i.e. api/task/?uid=1
 router.get('',(req,res)=>{
     try{
         let data = db.getTask(parseInt(req.query.uid))
