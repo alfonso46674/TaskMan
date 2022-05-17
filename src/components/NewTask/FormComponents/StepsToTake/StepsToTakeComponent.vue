@@ -1,7 +1,12 @@
 <template>
+<!-- Add new stepObject with ctrl+Enter, delete it with ctrl+backspace -->
   <div class="input-group" v-for="step in stepCount" :key="step">
             <span class="input-group-text">Step  {{step}}</span>
-            <textarea class="form-control" aria-label="With textarea" :id="step" @input="editStepObject" required></textarea>
+            <textarea class="form-control" aria-label="With textarea" 
+                :id="step" @input="editStepObject" required
+                @keyup.ctrl.enter="addEmptyStepObject()"
+                @keyup.ctrl.delete="removeStepObject()"
+                ></textarea>
   </div>
 
   <div id="icons">
