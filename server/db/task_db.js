@@ -6,8 +6,6 @@ let lib = {}
 
 //create the Task Table
 lib.createTaskTable = function(){
-    //TODO Add a unique auto-incremental identifier to handle rows. At the moment,
-    //uid is not unique, since its an id that includes the task and its steps, so the steps share the task's id
     db.run(`CREATE TABLE IF NOT EXISTS Tasks (
         uid INTEGER NOT NULL, 
         title TEXT NOT NULL, 
