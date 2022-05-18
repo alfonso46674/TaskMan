@@ -4,6 +4,10 @@
 GET {{host}}/task?uid=1
 
 ###
+GET {{host}}/task/all
+
+
+###
 POST {{host}}/task/new
 Content-Type: application/json
 

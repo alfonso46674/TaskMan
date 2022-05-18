@@ -65,7 +65,7 @@ lib.addTaskToDB = async function(task){
 
 //return a task by its uid
 lib.getTask = function(uid){
-    let tableColumns = ' uid,title,priority, stepNumber, stepValue, status, dateToDisplay, dateTimeStamp,lastModifiedDateToDisplay,lastModifiedDateTimeStamp'
+    let tableColumns = ' uid,title,priority, status, dateToDisplay, dateTimeStamp,lastModifiedDateToDisplay,lastModifiedDateTimeStamp'
     let task = db.queryOne(`SELECT ${tableColumns} FROM Tasks WHERE uid = ?`, [uid])
     let steps = db.queryAll(`SELECT stepNumber,stepValue FROM Tasks WHERE uid = ?`, [uid])
     task.steps = steps
