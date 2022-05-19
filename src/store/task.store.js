@@ -1,4 +1,5 @@
 import axios from "axios"
+import {url} from '../config/env_variables'
 
 export const task = {
     namespaced: true,
@@ -15,7 +16,7 @@ export const task = {
     },
     actions:{
         getTaskById(ctx,{taskId}){
-            axios.get(`http://localhost:4674/api/task/?uid=${taskId}`)
+            axios.get(`${url}/api/task/?uid=${taskId}`)
             .then(response => {
                 console.log(response.data)
                 ctx.commit('setTask',response.data)
