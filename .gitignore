@@ -26,4 +26,4 @@ pnpm-debug.log*
 /dist_electron
 
 #Ignore Sqlite database
-/public/db/tasks.db
+/public/db
