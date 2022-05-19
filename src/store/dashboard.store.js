@@ -1,4 +1,5 @@
 import axios from "axios"
+import {url} from '../config/env_variables'
 
 export const dashboard = {
     namespaced: true,
@@ -19,7 +20,7 @@ export const dashboard = {
     },
     actions: {
         getTasksData(ctx){
-            axios.get('http://localhost:4674/api/task/all')
+            axios.get(`${url}/api/task/all`)
                 .then((response)=> {
                     ctx.commit('setTasksData',response.data)
                 }).catch((error)=>{
