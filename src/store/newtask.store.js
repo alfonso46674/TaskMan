@@ -1,4 +1,5 @@
 import axios from "axios"
+import {url} from '../config/env_variables'
 
 export const newTask = {
     namespaced: true,
@@ -45,7 +46,7 @@ export const newTask = {
     },
     actions:{
         postNewTask({commit,state}){
-            axios.post('http://localhost:4674/api/task/new',
+            axios.post(`${url}/api/task/new`,
             {
                 title: state.title,
                 priority: state.priority,
