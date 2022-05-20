@@ -5,6 +5,10 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import {router} from './routes/router'
 import {store} from './store/store'
 
+//import vuetify
+import vuetify from './plugins/vuetify'
+import { loadFonts } from './plugins/webfontloader'
+
 //import icons
 import { faSort } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -20,7 +24,11 @@ library.add(faSort);
 library.add(faPlus);
 library.add(faMinus);
 
+//load webfontloader
+loadFonts()
+
 const app = createApp(App)
+app.use(vuetify)
 app.use(router)
 app.use(store)
 app.component('font-awesome-icon',FontAwesomeIcon)
