@@ -1,33 +1,49 @@
 <template>
   <div>
-    <div class="rootDiv">
       <form @submit.prevent="submitData">
-      <div>
-        <label>Task title</label>
-        <input @input="editTitle" required/>
-      </div>
-      
-      <!-- Used for the task priority -->
-      <drop-down-component
-        :dropdownName="'Priority'"
-        :dropdownItems="priorityItems"
-        :selectedItem="priority"
-        aria-required="true"
-      />
+        <v-container>
+          <!-- Component title -->
+          <v-row>
+            <v-col>
+              <p >Add New Task</p>
+            </v-col>
+        </v-row>
+        
+        <!-- Row for the task title input, priority input -->
+        <v-row>
+          <!-- Task title input field -->
+          <v-col>
+            <v-text-field
+              label="Task Title"
+              @input="saveTitle"
+              required
+            ></v-text-field>
+          </v-col>
+        <!-- Priority input field -->
+        <v-col>
+          <v-select
+            :items="priorityItems"
+            label="Priority"
+            aria-required="true"
+            @update:modelValue="savePriority"
+          ></v-select>
+        </v-col>
+        </v-row>
+
+        </v-container>
+
+
 
       
       <steps-to-take-component/>
 
       <button>Submit</button>
       </form>
-    </div>
     <router-link to="/"> Back </router-link>
   </div>
 </template>
 
 <script>
-import {computed } from "vue";
-import DropDownComponent from "./FormComponents/DropDown/DropDownComponent.vue";
 
 import {useStore} from 'vuex'
 import StepsToTakeComponent from './FormComponents/StepsToTake/StepsToTakeComponent.vue';
@@ -35,7 +51,6 @@ import {useRouter} from 'vue-router'
 
 export default {
   components: {
-    DropDownComponent,
     StepsToTakeComponent
   },
   setup() {
@@ -46,17 +61,15 @@ export default {
     const priorityItems = [1,2,3,4]
 
     //save title input value in the store
-    const editTitle = (event) =>{
+    const saveTitle = (event) =>{
       store.commit('newTask/setTitle',event.target.value)
     }
 
-    //recompute the priority when the user changes it in the dropdown component
-    const priority = computed(()=>{
-      if(store.getters['newTask/currentPriority'] == null){
-        return ' '
-      }
-      return store.getters['newTask/currentPriority']
-    })
+    //save priority input value in the store
+    const savePriority = (selectedPrority) => {
+      console.log("hola")
+      store.commit('newTask/setPriority',selectedPrority)
+    }
 
     const submitData = () => {
       store.dispatch('newTask/postNewTask')
@@ -64,9 +77,9 @@ export default {
     }
 
     return {
-      editTitle,
+      saveTitle,
       priorityItems,
-      priority,
+      savePriority,
       submitData
     };
   },

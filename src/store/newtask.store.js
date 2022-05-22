@@ -59,9 +59,6 @@ export const newTask = {
         }
     },
     getters:{
-        currentPriority(state){
-            return state.priority
-        },
         currentNumberOfSteps(state){
             return state.steps.length
         },
