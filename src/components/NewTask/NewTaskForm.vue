@@ -1,11 +1,11 @@
 <template>
   <div>
-      <form @submit.prevent="submitData">
+      <v-form>
         <v-container>
           <!-- Component title -->
           <v-row>
             <v-col>
-              <p >Add New Task</p>
+              <p id="formTitle">Add New Task</p>
             </v-col>
           </v-row>
         
@@ -13,6 +13,7 @@
           <v-row>
             <!-- Task title input field -->
             <v-col>
+                <!-- TODO wait for the official release of vuetify to change the outline background color -->
               <v-text-field
                 label="Task Title"
                 @input="saveTitle"
@@ -21,10 +22,11 @@
             </v-col>
             <!-- Priority input field -->
             <v-col>
+              <!-- TODO wait for the official release of veautify to change the background color to white -->
               <v-select
                 :items="priorityItems"
                 label="Priority"
-                aria-required="true"
+                required
                 @update:modelValue="savePriority"
               ></v-select>
             </v-col>
@@ -33,11 +35,18 @@
           <!-- Custom component for the task's steps -->
           <steps-to-take-component />
 
+          <!-- submit button -->
+          <v-btn
+            rounded="lg"
+            color="#1A618E"
+            variant="outlined"
+            @click="submitData"
+          >
+            Submit
+          </v-btn>
 
-          <button>Submit</button>
         </v-container>
-      </form>
-    <router-link to="/"> Back </router-link>
+      </v-form>
   </div>
 </template>
 
@@ -85,7 +94,10 @@ export default {
 </script>
 
 <style>
-#steps {
-  width: 20px;
-}
+  #formTitle{
+    color: #009AA4;
+    font-weight: 600;
+    text-align: left;
+    font-size: 64px;
+  }
 </style>
