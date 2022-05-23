@@ -1,17 +1,20 @@
 <template>
 <!-- Add new stepObject with ctrl+Enter, delete it with ctrl+backspace -->
-  <div class="input-group" v-for="step in stepCount" :key="step">
-            <span class="input-group-text">Step  {{step}}</span>
+  <div class="input-group shadow" v-for="step in stepCount" :key="step">
+            <span class="input-group-text" style="background-color:#009AA4;">Step  {{step}}</span>
             <textarea class="form-control" aria-label="With textarea" 
-                :id="step" @input="editStepObject" required
+                :id="step" 
+                @input="editStepObject" required
                 @keyup.ctrl.enter="addEmptyStepObject()"
                 @keyup.ctrl.delete="removeStepObject()"
+                placeholder="Action to take"
+                rows="2"
                 ></textarea>
   </div>
 
   <div id="icons">
-    <font-awesome-icon icon="minus" class="fa-xl" @click="removeStepObject();"  v-if="stepCount > 1"/>
-    <font-awesome-icon icon="plus" class="fa-xl" @click="addEmptyStepObject();"/>
+    <v-icon size="x-large" color="teal darken-2" @click="removeStepObject();"  v-if="stepCount > 1">mdi-minus-circle</v-icon>
+    <v-icon size="x-large" color="teal darken-2" @click="addEmptyStepObject();">mdi-plus-circle</v-icon>
   </div>
      
 </template>
