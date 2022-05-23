@@ -7,37 +7,35 @@
             <v-col>
               <p >Add New Task</p>
             </v-col>
-        </v-row>
+          </v-row>
         
-        <!-- Row for the task title input, priority input -->
-        <v-row>
-          <!-- Task title input field -->
-          <v-col>
-            <v-text-field
-              label="Task Title"
-              @input="saveTitle"
-              required
-            ></v-text-field>
-          </v-col>
-        <!-- Priority input field -->
-        <v-col>
-          <v-select
-            :items="priorityItems"
-            label="Priority"
-            aria-required="true"
-            @update:modelValue="savePriority"
-          ></v-select>
-        </v-col>
-        </v-row>
+          <!-- Row for the task title input, priority input -->
+          <v-row>
+            <!-- Task title input field -->
+            <v-col>
+              <v-text-field
+                label="Task Title"
+                @input="saveTitle"
+                required
+              ></v-text-field>
+            </v-col>
+            <!-- Priority input field -->
+            <v-col>
+              <v-select
+                :items="priorityItems"
+                label="Priority"
+                aria-required="true"
+                @update:modelValue="savePriority"
+              ></v-select>
+            </v-col>
+          </v-row>
 
+          <!-- Custom component for the task's steps -->
+          <steps-to-take-component />
+
+
+          <button>Submit</button>
         </v-container>
-
-
-
-      
-      <steps-to-take-component/>
-
-      <button>Submit</button>
       </form>
     <router-link to="/"> Back </router-link>
   </div>
@@ -87,4 +85,7 @@ export default {
 </script>
 
 <style>
+#steps {
+  width: 20px;
+}
 </style>
