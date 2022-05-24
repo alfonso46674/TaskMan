@@ -2,8 +2,9 @@
   <div>
     <v-form>
       <v-container fluid>
-        <!-- Task tile -->
+
         <v-row no-gutters>
+          <!-- Task tile -->
           <v-col>
             <p id="taskTitle">{{task.title}}</p>
           </v-col>
@@ -66,46 +67,46 @@
           </v-col>
 
           <v-spacer></v-spacer>
-          <v-spacer></v-spacer>
 
         </v-row>
+        <!-- Show the task steps -->
+        <steps-component/>
+        
       </v-container>
     </v-form>
   </div>
 </template>
 
 <script>
-import axios from "axios"
-import {url} from '../../config/env_variables'
 import {useRoute} from 'vue-router'
-import {onMounted, onUnmounted,ref} from 'vue'
-// import {useStore} from 'vuex'
+import {onMounted, onUnmounted} from 'vue'
+import StepsComponent from './FormComponents/StepsComponent/StepsComponent.vue'
+import {useStore} from 'vuex'
 export default {
- 
+  components:{
+    StepsComponent
+  },
   setup(){
     const route = useRoute()
-    // const store = useStore()
+    const store = useStore()
 
-    //reactive variable that holds the current task informaiton
-    const task = ref({})
+  
 
     // When mounting the component, obtain the task data and save it 
     onMounted( async () =>{
-      task.value = await getTaskData()
-      console.log(task.value)
+      //fetch the task data from the backend, and store it in the task store for future use
+      store.dispatch('task/getTaskById',{taskId:route.params.id})
     })
 
-    //request the taskData to the backend by its uid
-    const getTaskData = async () => {
-      let res = await axios.get(`${url}/api/task/?uid=${route.params.id}`)
-      if(res.status == 200) return res.data
-      else return false
-    }
-
-    //on unmount, delete any task data that could be in the task variable
+  
     onUnmounted(()=>{
-      task.value = null
+      //when the component is about to be dismounted, set the task to null in the task store 
+      //to avoid having data in the store when moving to another page
+      store.commit('task/setTask',null)
     })
+
+    //variable that holds the task data in the task store
+    const task  = store.getters['task/task']
 
     return{
       task
