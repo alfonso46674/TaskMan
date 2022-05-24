@@ -34,7 +34,6 @@ export default {
 
     //Tells if the current path is the dashboard ( / ) or not
     const notDashboard = () =>{
-      console.log(currentPath.value)
       if(currentPath.value !== '/') return true
       else return false
     }
