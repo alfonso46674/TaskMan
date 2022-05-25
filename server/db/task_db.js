@@ -104,4 +104,48 @@ lib.getMaxUid = function(){
     }
 }
 
+//update a tasks setp information by its uid and stepNumbe
+//@Data should be an object as follows:
+// {uid: '', stepNumber: '', stepValue: ''}
+lib.updateStep = function(uid,stepNumber,stepValue){
+    //TODO use package joi to validate the structure of the object
+    let res = db.run(`UPDATE tasks
+            SET stepValue = @stepValue
+            WHERE uid = @uid AND stepNumber = @stepNumber`,
+           { 
+               uid,
+               stepValue,
+               stepNumber
+            }
+    )
+    //return the number of rows that were updated
+    return res.changes
+}
+
+//updates tasks general and simple attributes: title, priority, status, lastModifiedDateToDisplay and lastModifiedDateTimeStamp
+lib.updateTask = function(data){
+    //TODO use package joi to validate the structure of the object
+    let res = db.run(`UPDATE tasks
+            SET title = @title, priority = @priority, status = @status, lastModifiedDateToDisplay = @dateDisplay, lastModifiedDateTimeStamp = @dateTimestamp
+            WHERE uid = @uid`,
+           { 
+               uid:data.uid,
+               title: data.title,
+               priority: data.priority,
+               status: data.status,
+               dateDisplay: data.lastModifiedDateToDisplay,
+               dateTimestamp: data.lastModifiedDateTimeStamp
+            }
+    )
+    //return the number of rows that were updated
+    return res.changes
+}
+
+//obtain name of the columns in the database
+lib.getDatabaseColumns = function(tableName){
+    let columnsObject = db.queryAll(`PRAGMA table_info(${tableName})`,{})
+    //return only the name of the columns
+    return columnsObject.map(column => column.name)
+}
+
 module.exports = lib
