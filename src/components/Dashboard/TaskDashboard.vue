@@ -1,6 +1,12 @@
 <template>
-  <router-link to="/newTask"> Create task </router-link>
-  <table-component />
+  <div>
+    <v-row no-gutters>
+      <v-col>
+        <p id="dashboardTitle">Dashboard</p>
+      </v-col>
+    </v-row>
+    <table-component />
+  </div>
 </template>
 
 <script>
@@ -11,4 +17,10 @@ export default {
 </script>
 
 <style>
+  #dashboardTitle{
+    color: #009AA4;
+    font-weight: 600;
+    text-align: left;
+    font-size: 64px;
+  }
 </style>

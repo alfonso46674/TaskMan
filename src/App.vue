@@ -16,9 +16,10 @@
     </v-app-bar>
 
     <v-main>
-      <div id="root">
+      <!-- margin-top -64px margin to left and right is automatic-->
+      <v-container fluid class="mt-n16 mx-auto">
         <router-view/>
-      </div>
+      </v-container>
     </v-main>
   </v-app>
 </template>

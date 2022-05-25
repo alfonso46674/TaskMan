@@ -1,7 +1,7 @@
 <template>
   <div>
       <v-form>
-        <v-container>
+        <v-container fluid>
           <!-- Component title -->
           <v-row>
             <v-col>
