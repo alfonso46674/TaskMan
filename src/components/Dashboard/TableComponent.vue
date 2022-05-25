@@ -1,16 +1,31 @@
 <template>
-  <!-- TODO separate the seach bar into another component, and put it in the taskDashboard -->
+  <!-- TODO separate the seach bar and new task button into another component, and put it in the taskDashboard -->
   <div class="rootDiv">
-    <div class="searchBar">
-      <div class="input-group mb-5">
-        <input
-          type="search"
-          class="form-control"
+    <v-row>
+      <!-- Search bar -->
+      <v-col cols="3">
+        <v-text-field
+          variant="outlined"
           v-model="searchQuery"
-          placeholder="Task's Name"
+          placeholder="Task Title"
+          label="Task Title"
         />
-      </div>
-    </div>
+      </v-col>
+      <!-- Col used for spacing -->
+      <v-col cols="7"></v-col>
+      <!-- New task button -->
+      <v-col cols="2">
+        <v-btn
+          class="text-body-1"
+          color="#1A618E"
+          size="large"
+        >
+          <router-link to="/newTask" style="text-decoration:none">
+            <p id="buttonText">+ Add Task</p>
+           </router-link>
+        </v-btn>
+      </v-col>
+    </v-row>
 
     <table
       id="tableComponent"
@@ -159,4 +174,10 @@ table th {
   text-align: center;
   vertical-align: middle;
 }
+
+#buttonText{
+  padding-top: 15px;
+  color: white;
+}
+
 </style>
