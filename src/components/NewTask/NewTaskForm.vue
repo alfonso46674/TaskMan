@@ -1,33 +1,56 @@
 <template>
   <div>
-    <div class="rootDiv">
-      <form @submit.prevent="submitData">
-      <div>
-        <label>Task title</label>
-        <input @input="editTitle" required/>
-      </div>
-      
-      <!-- Used for the task priority -->
-      <drop-down-component
-        :dropdownName="'Priority'"
-        :dropdownItems="priorityItems"
-        :selectedItem="priority"
-        aria-required="true"
-      />
+      <v-form>
+        <v-container fluid>
+          <!-- Component title -->
+          <v-row>
+            <v-col>
+              <p id="formTitle">Add New Task</p>
+            </v-col>
+          </v-row>
+        
+          <!-- Row for the task title input, priority input -->
+          <v-row>
+            <!-- Task title input field -->
+            <v-col>
+                <!-- TODO wait for the official release of vuetify to change the outline background color -->
+              <v-text-field
+                label="Task Title"
+                @input="saveTitle"
+                required
+              ></v-text-field>
+            </v-col>
+            <!-- Priority input field -->
+            <v-col>
+              <!-- TODO wait for the official release of veautify to change the background color to white -->
+              <v-select
+                :items="priorityItems"
+                label="Priority"
+                required
+                @update:modelValue="savePriority"
+              ></v-select>
+            </v-col>
+          </v-row>
 
-      
-      <steps-to-take-component/>
+          <!-- Custom component for the task's steps -->
+          <steps-to-take-component />
 
-      <button>Submit</button>
-      </form>
-    </div>
-    <router-link to="/"> Back </router-link>
+          <!-- submit button -->
+          <v-btn
+            rounded="lg"
+            color="#1A618E"
+            variant="outlined"
+            @click="submitData"
+          >
+            Submit
+          </v-btn>
+
+        </v-container>
+      </v-form>
   </div>
 </template>
 
 <script>
-import {computed } from "vue";
-import DropDownComponent from "./FormComponents/DropDown/DropDownComponent.vue";
 
 import {useStore} from 'vuex'
 import StepsToTakeComponent from './FormComponents/StepsToTake/StepsToTakeComponent.vue';
@@ -35,7 +58,6 @@ import {useRouter} from 'vue-router'
 
 export default {
   components: {
-    DropDownComponent,
     StepsToTakeComponent
   },
   setup() {
@@ -46,17 +68,15 @@ export default {
     const priorityItems = [1,2,3,4]
 
     //save title input value in the store
-    const editTitle = (event) =>{
+    const saveTitle = (event) =>{
       store.commit('newTask/setTitle',event.target.value)
     }
 
-    //recompute the priority when the user changes it in the dropdown component
-    const priority = computed(()=>{
-      if(store.getters['newTask/currentPriority'] == null){
-        return ' '
-      }
-      return store.getters['newTask/currentPriority']
-    })
+    //save priority input value in the store
+    const savePriority = (selectedPrority) => {
+      console.log("hola")
+      store.commit('newTask/setPriority',selectedPrority)
+    }
 
     const submitData = () => {
       store.dispatch('newTask/postNewTask')
@@ -64,9 +84,9 @@ export default {
     }
 
     return {
-      editTitle,
+      saveTitle,
       priorityItems,
-      priority,
+      savePriority,
       submitData
     };
   },
@@ -74,4 +94,10 @@ export default {
 </script>
 
 <style>
+  #formTitle{
+    color: #009AA4;
+    font-weight: 600;
+    text-align: left;
+    font-size: 64px;
+  }
 </style>

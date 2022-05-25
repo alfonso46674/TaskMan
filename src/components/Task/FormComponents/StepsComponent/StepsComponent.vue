@@ -1,14 +1,15 @@
 <template>
+
 <!-- Add new stepObject with ctrl+Enter, delete it with ctrl+backspace -->
-  <div class="input-group shadow" v-for="step in stepCount" :key="step">
-            <span class="input-group-text" style="background-color:#D9F0F0;">Step  {{step}}</span>
+  <div class="input-group shadow" v-for="step in stepsArray" :key="step.stepNumber">
+            <span class="input-group-text" style="background-color:#D9F0F0;">Step  {{step.stepNumber}}</span>
             <textarea class="form-control" aria-label="With textarea" 
-                :id="step" 
+                :id="step.stepNumber" 
                 @input="editStepObject" required
                 @keyup.ctrl.enter="addEmptyStepObject()"
-                @keyup.ctrl.delete="removeStepObject()"
-                placeholder="Action to take"
+                @keyup.ctrl.delete="removeStepObject()"                
                 rows="2"
+                v-model="step.stepValue"
                 ></textarea>
   </div>
 
@@ -24,31 +25,37 @@ import {useStore} from 'vuex'
 import {computed} from 'vue'
 
 export default {
-
+ 
     setup(){
         const store = useStore()
         
-
+        //computed variable for the steps array, each step has a stepValue an a stepNumber
+        const stepsArray = computed(()=>{
+            return store.getters['task/steps']
+        })
+        
+        //computed variable to see how many steps there are
         const stepCount = computed(()=>{
-            return store.getters['newTask/currentNumberOfSteps']
+            return store.getters['task/currentNumberOfSteps']
         })
 
-
         const removeStepObject = () => {
-            store.commit('newTask/removeStepObject')
+            store.commit('task/removeStepObject')
         }
 
         const addEmptyStepObject = () => {
-            store.commit('newTask/addStepObject',{id: store.getters['newTask/currentNumberOfSteps'] + 1 , value: "" })
+            store.commit('task/addStepObject',{id: store.getters['task/currentNumberOfSteps'] + 1 , value: "" })
         }
 
+        //when there is a change in the input of each textarea, save it in the task store by its element id and the value
         const editStepObject = event => {
-            store.commit('newTask/editStepObject',{id: event.target.id, value: event.target.value})
+            store.commit('task/editStepObject',{id: event.target.id, value: event.target.value})
         }
 
 
         return {
             stepCount,
+            stepsArray,
             removeStepObject,
             addEmptyStepObject,
             editStepObject

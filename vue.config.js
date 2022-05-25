@@ -7,17 +7,24 @@ module.exports = defineConfig({
     }
   },
   pluginOptions:{
-    electronBuilder:{
-      externals: ['better-sqlite3'],
-      builderOptions:{
-        "extraResources":[
+    electronBuilder: {
+      externals: [
+        'better-sqlite3'
+      ],
+      builderOptions: {
+        extraResources: [
           {
-            'from':'./public/db/',
-            'to':'db/',
-            "filter":["**/*"]
+            from: './public/db/',
+            to: 'db/',
+            filter: [
+              '**/*'
+            ]
           }
         ]
       }
-    }
+    },
+    vuetify: {
+			// https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vuetify-loader
+		}
   }
 })
