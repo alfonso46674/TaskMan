@@ -1,7 +1,7 @@
 @host = http://localhost:4674/api
 
 ###
-GET {{host}}/task?uid=1
+GET {{host}}/task?uid=4
 
 ###
 GET {{host}}/task/all
@@ -22,6 +22,18 @@ Content-Type: application/json
     ]
 }
 
+###
+PUT {{host}}/task/updateTask
+Content-Type: application/json
 
+{
+    "uid":4,
+    "title":"test integration",
+    "priority":"3",
+    "status":"Changed",
+    "steps": [
+   
+  ]
+}
 ###
 DELETE {{host}}

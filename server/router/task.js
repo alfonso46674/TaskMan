@@ -70,5 +70,44 @@ router.post('/new',(req,res)=>{
 //delete a task by its uid
 
 //update a task by its uid
+router.put('/updateTask',(req,res)=>{
+    try {
+        // TODO use package joi here instead of the db to validate data
+        let {uid,title,priority,status,steps} = req.body
+        //counter to track the modified rows
+        let rowsCounter = 0
+        if(uid != '' && title != '' && priority != '' && status != ''){
+            //obtain the current date
+            let date = new Date()
+    
+            //update data rows with new the new info
+            rowsCounter += db.updateTask({
+                uid:uid,
+                title:title,
+                priority: priority,
+                status:status
+            })
+    
+            //if steps array is not an empty array,update the necessary step rows
+            if(steps != []){
+                //for each step in the step array, update it in the database 
+                steps.forEach(step => rowsCounter += db.updateStep(uid,step.stepNumber,step.stepValue))
+            }
+    
+            //update the modified date
+            rowsCounter += db.updateTask({
+                lastModifiedDateToDisplay: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`,
+                lastModifiedDateTimeStamp: date.getTime()
+            })
+            res.status(200).send({'Updated rows':rowsCounter})
+        } else {
+            res.status(400).send({'Missing parameters':'There are missing parameters to update a task'})
+        }
+    } catch (error) {
+        res.status(500).send({'Error while updating the task':error})
+    }
+
+
+})
 
 module.exports = router
