@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    env_file:
+      - backend/.env.example
+    environment:
+      DB_TYPE: postgresql
+      DATABASE_URL: postgresql://taskman:taskman@db:5432/taskman
+    ports:
+      - '4674:4674'
+    depends_on:
+      - db
+    command: npm run dev
+    volumes:
+      - ./server:/app/server
+      - /app/server/node_modules
+      - backend-sqlite-data:/app/server/data
+  db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: taskman
+      POSTGRES_PASSWORD: taskman
+      POSTGRES_DB: taskman
+    ports:
+      - '5432:5432'
+    volumes:
+      - backend-postgres-data:/var/lib/postgresql/data
+
+volumes:
+  backend-sqlite-data:
+  backend-postgres-data:
