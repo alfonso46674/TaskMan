@@ -109,7 +109,7 @@ lib.getMaxUid = function(){
 // {uid: '', stepNumber: '', stepValue: ''}
 lib.updateStep = function(uid,stepNumber,stepValue){
     //TODO use package joi to validate the structure of the object
-    let res = db.run(`UPDATE tasks
+    let res = db.run(`UPDATE Tasks
             SET stepValue = @stepValue
             WHERE uid = @uid AND stepNumber = @stepNumber`,
            { 
@@ -125,7 +125,7 @@ lib.updateStep = function(uid,stepNumber,stepValue){
 //updates tasks general and simple attributes: title, priority, status, lastModifiedDateToDisplay and lastModifiedDateTimeStamp
 lib.updateTask = function(data){
     //TODO use package joi to validate the structure of the object
-    let res = db.run(`UPDATE tasks
+    let res = db.run(`UPDATE Tasks
             SET title = @title, priority = @priority, status = @status, lastModifiedDateToDisplay = @dateDisplay, lastModifiedDateTimeStamp = @dateTimestamp
             WHERE uid = @uid`,
            { 
