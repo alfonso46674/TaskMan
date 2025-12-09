@@ -18,31 +18,36 @@ TaskMan combines a Vue 3 front end with an Electron shell and a lightweight Expr
   - `GET /api/task/all` returns all tasks.
   - `GET /api/task?uid=:uid` returns a specific task.
   - `POST /api/task/new` creates a task with a UID, title, priority, steps array, status, and timestamps.
+  - `PUT /api/task/updateTask` updates an existing task (title, priority, status, and any provided steps) and refreshes the task's last-modified timestamp.
 
 ### Data model
-`server/db/task_db.js` stores tasks in a SQLite `Tasks` table. Each row represents a step on a task and includes metadata that ties the steps back to a single UID:
+`server/db/task_db.js` stores tasks in a SQLite `Tasks` table. Each row represents a single step of a task and includes metadata that ties the steps back to a UID:
 
 | Column | Purpose |
 | --- | --- |
 | `uid` | Unique integer identifier for a task. |
 | `title` | Task title (repeated per step row). |
 | `priority` | Numeric priority set by the client. |
-| `step` | Text for an individual step. |
+| `stepNumber` | Position of the step within the task. |
+| `stepValue` | Text for an individual step. |
 | `status` | Status string (currently defaults to `Active`). |
 | `dateToDisplay` / `dateTimeStamp` | Creation date string and timestamp. |
 | `lastModifiedDateToDisplay` / `lastModifiedDateTimeStamp` | Last modified date string and timestamp. |
 
 ### Database layer
 - `server/db/task_db.js` orchestrates SQLite operations using `better-sqlite3` helpers.
-  - `createTaskTable()` ensures the `Tasks` table exists with columns for UIDs, metadata, and individual steps.
+  - `createTaskTable()` ensures the `Tasks` table exists with the columns listed above.
   - `addTaskToDB()` inserts each step row for a task while preserving timestamps and status.
   - `getTask(uid)` and `getAllTasks()` query task records and attach their associated steps.
   - `getMaxUid()` returns the highest UID to issue the next task identifier.
+  - `updateStep(uid, stepNumber, stepValue)` updates the text of a single step on a task.
+  - `updateTask(data)` updates task-level attributes such as title, priority, status, and last-modified timestamps.
+  - `getDatabaseColumns(tableName)` returns the list of columns for a given table, used for schema introspection.
 
 ### Request flow
 1. The frontend issues Axios calls to the Express API (e.g., `GET /api/task/all`).
 2. Express routes delegate to `task_db.js` helpers to read or write SQLite rows.
-3. Responses return JSON objects with task metadata and their ordered `steps` arrays.
+3. Responses return JSON objects with task metadata and their ordered `steps` arrays (each entry shaped as `{ stepNumber, stepValue }`).
 
 ### Process topology
 - In Electron, `src/background.js` imports the Express server and starts it inside the Electron lifecycle before creating the browser window. In standalone API mode, `npm run server` invokes `nodemon` with `NODE_ENV=serverTest` to boot the same server.
@@ -55,10 +60,30 @@ TaskMan combines a Vue 3 front end with an Electron shell and a lightweight Expr
 
 ### Routing and state
 - `src/routes/router.js` switches between the dashboard, task creation form, and individual task pages. It uses hash history in Electron builds and HTML5 history in the browser.
-- `src/store/store.js` provides the Vuex store that backs state shared across components.
+- `src/store/store.js` composes the Vuex modules that back state shared across components:
+  - `newtask.store.js` manages the in-progress task draft, including title, priority, and step objects shaped as `{ id, value }`.
+  - `dashboard.store.js` loads aggregated task data for the dashboard table.
+  - `task.store.js` holds a selected task's details and step array shaped as `{ stepNumber, stepValue }` for viewing and editing.
 
 ### UI stack
 - Styling and layout are provided by Bootstrap 5. Icons are supplied by Font Awesome. State management and navigation are handled by Vuex and Vue Router, respectively.
+
+### Component structure
+- `src/components/Dashboard/TaskDashboard.vue` is the root dashboard view and uses `TableComponent` to render the task list.
+- `src/components/Dashboard/TableComponent.vue` renders the sortable, searchable tasks table and links to task detail routes.
+- `src/components/NewTask/NewTaskForm.vue` renders the task creation form and embeds `StepsToTakeComponent` to manage draft steps.
+- `src/components/NewTask/FormComponents/StepsToTake/StepsToTakeComponent.vue` maintains the steps draft list (array of `{ id, value }`).
+- `src/components/Task/TaskComponent.vue` displays a specific task and mounts `StepsComponent` for its steps.
+- `src/components/Task/FormComponents/StepsComponent/StepsComponent.vue` renders and edits persisted steps shaped as `{ stepNumber, stepValue }`.
+
+### Configuration
+- `src/config/env_variables.js` centralizes the API host and port (`url` and `port`) used by Axios requests.
+
+## Step data flow
+- **Creation (frontend):** `StepsToTakeComponent` builds an array of step objects shaped `{ id, value }` inside the `newTask` Vuex module.
+- **API contract:** `POST /api/task/new` receives the steps array and persists each entry as a row with matching `stepNumber` and `stepValue` columns.
+- **Retrieval:** `GET /api/task/all` and `GET /api/task?uid=` return tasks with `steps` arrays shaped `{ stepNumber, stepValue }`.
+- **Editing:** `task.store.js` manages the `{ stepNumber, stepValue }` array for a selected task; `PUT /api/task/updateTask` updates task metadata and any provided steps via `updateTask`/`updateStep` helpers.
 
 ## Electron shell
 - `src/background.js` uses `vue-cli-plugin-electron-builder` to manage Electron. It registers the custom `app://` protocol for production builds, starts the Express server on `0.0.0.0:4674`, and loads the Vue application URL (dev server in development, packaged files in production). The script also installs Vue DevTools during development.
