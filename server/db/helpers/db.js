@@ -1,11 +1,13 @@
 const sqlite = require('better-sqlite3');
 const path = require('path');
 const isDevelopment = process.env.NODE_ENV !== 'production'
-const db = new sqlite(
+const dbPath = process.env.DB_PATH || (
   isDevelopment
-  ? path.resolve('public/db/tasks.db') // if in dev mode
-  : path.join(process.resourcesPath,'db/tasks.db') // the resources path if in production build
+    ? path.resolve('public/db/tasks.db') // if in dev mode
+    : path.join(process.resourcesPath, 'db/tasks.db') // the resources path if in production build
 );
+
+const db = new sqlite(dbPath);
 
 function queryAll(sql, params) {
   return db.prepare(sql).all(params);
