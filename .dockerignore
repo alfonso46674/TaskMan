@@ -1,0 +1,14 @@
+node_modules
+npm-debug.log*
+.dockerignore
+.git
+.gitignore
+dist
+dist_electron
+public/db
+server/node_modules
+server/data
+backend/.env
+backend/.env.local
+backend/.env.development
+backend/.env.production
