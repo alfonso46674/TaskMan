@@ -63,12 +63,11 @@ lib.addTaskToDB = async function (task) {
         }
       )
 
-      let message = 'Error in creating task'
-      if (result.changes) {
-        message = 'Task created successfully'
+      if (!result.changes) {
+        return false
       }
-      return message
     }
+
     return true
   } catch (e) {
     console.log({ 'Error on adding task to database': e })
@@ -150,7 +149,11 @@ lib.updateTask = async function (data) {
   //TODO use package joi to validate the structure of the object
   const res = await db.run(
     `UPDATE Tasks
-            SET title = @title, priority = @priority, status = @status, lastModifiedDateToDisplay = @dateDisplay, lastModifiedDateTimeStamp = @dateTimestamp
+            SET title = COALESCE(@title, title),
+                priority = COALESCE(@priority, priority),
+                status = COALESCE(@status, status),
+                lastModifiedDateToDisplay = COALESCE(@dateDisplay, lastModifiedDateToDisplay),
+                lastModifiedDateTimeStamp = COALESCE(@dateTimestamp, lastModifiedDateTimeStamp)
             WHERE uid = @uid`,
     {
       uid: data.uid,

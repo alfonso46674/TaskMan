@@ -9,7 +9,7 @@ services:
       - backend/.env.example
     environment:
       DB_TYPE: postgresql
-      DATABASE_URL: postgresql://taskman:taskman@db:5432/taskman
+      DATABASE_URL: postgresql://${POSTGRES_USER:-taskman}:${POSTGRES_PASSWORD:-change-me}@db:5432/${POSTGRES_DB:-taskman}
     ports:
       - '4674:4674'
     depends_on:
@@ -23,9 +23,9 @@ services:
     image: postgres:15-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_USER: taskman
-      POSTGRES_PASSWORD: taskman
-      POSTGRES_DB: taskman
+      POSTGRES_USER: ${POSTGRES_USER:-taskman}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+      POSTGRES_DB: ${POSTGRES_DB:-taskman}
     ports:
       - '5432:5432'
     volumes:
