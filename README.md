@@ -67,3 +67,11 @@ npm run lint
 
 ## Architecture overview
 See [ARCHITECTURE.md](ARCHITECTURE.md) for details on the backend, frontend, and data flow.
+
+## Cloud migration resources
+
+Plans for moving TaskMan from a desktop-first Electron app to a zero-cost, cloud-hosted PWA stack are documented in the `docs/` folder:
+
+- [CLOUD_ARCHITECTURE.md](docs/CLOUD_ARCHITECTURE.md) – Target infrastructure, hosting choices, performance, and security considerations.
+- [CLOUD_MIGRATION_ROADMAP.md](docs/CLOUD_MIGRATION_ROADMAP.md) – Phase-by-phase tasks, quality gates, and risk mitigations.
+- [ADRS.md](docs/ADRS.md) – Architecture decision records covering hosting, database, CI/CD, and mobile strategy choices.
